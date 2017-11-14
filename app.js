@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 
 // Cards route renders card template
 app.get('/cards', (req, res) => {
-    res.render('card', { prompt: 'Question 1', hint: 'Here is clue 1'});
+    res.render('card', { prompt: 'Question 1', hint: 'Here is a clue'});
 });
 
 // Port to serve app on, can also take a callback as a parameter
