@@ -23,7 +23,6 @@ app.get('/', (req, res) => {
     } else {
         res.redirect('hello');
     }
-
 });
 
 // Hello route get request, get username from cookie
@@ -45,6 +44,12 @@ app.post('/hello', (req, res) => {
 // Cards route renders card template
 app.get('/cards', (req, res) => {
     res.render('card', { prompt: 'Question 1', hint: 'Here is a clue'});
+});
+
+// Goodbye route
+app.post('/goodbye', (req, res) => {
+    res.clearCookie('username');
+    res.redirect('hello');
 });
 
 // Port to serve app on, can also take a callback as a parameter
