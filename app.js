@@ -1,12 +1,16 @@
 // Require modules
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 // This is convention
 const app = express();
 
 // Use body bodyParser and turn off extended option
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// Use cookie parser
+app.use(cookieParser());
 
 // Tells express which template engine to use, will ook in /views by default
 app.set('view engine', 'pug');
@@ -16,14 +20,14 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-// Hello route get request
+// Hello route get request, get username from cookie
 app.get('/hello', (req, res) => {
-    res.render('hello');
-
+    res.render('hello', { name: req.cookies.username });
 });
 
-// Hello route post request
+// Hello route post request, set username to cookie
 app.post('/hello', (req, res) => {
+    res.cookie('username', req.body.username);
     res.render('hello', { name: req.body.username});
 });
 
