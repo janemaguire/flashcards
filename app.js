@@ -19,12 +19,12 @@ app.get('/', (req, res) => {
 // Hello route get request
 app.get('/hello', (req, res) => {
     res.render('hello');
+
 });
 
 // Hello route post request
 app.post('/hello', (req, res) => {
-    console.log(req.body);
-    res.render('hello');
+    res.render('hello', { name: req.body.username});
 });
 
 // Cards route renders card template
