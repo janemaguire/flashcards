@@ -17,18 +17,29 @@ app.set('view engine', 'pug');
 
 // Home route will listen for GET requests, two parameters, path and callback function
 app.get('/', (req, res) => {
-    res.render('index');
+    const name = req.cookies.username;
+    if (name) {
+        res.render('index', { name });
+    } else {
+        res.redirect('hello');
+    }
+
 });
 
 // Hello route get request, get username from cookie
 app.get('/hello', (req, res) => {
-    res.render('hello', { name: req.cookies.username });
+    const name = req.cookies.username;
+    if (name) {
+        res.redirect('/');
+    } else {
+        res.render('hello');
+    }
 });
 
 // Hello route post request, set username to cookie
 app.post('/hello', (req, res) => {
     res.cookie('username', req.body.username);
-    res.render('hello', { name: req.body.username});
+    res.redirect('/');
 });
 
 // Cards route renders card template
