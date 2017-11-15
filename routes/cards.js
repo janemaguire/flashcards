@@ -1,14 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const data = require('../data/flashcardData.json').data;
-const cards = data.cards;
+const { data } = require('../data/flashcardData.json');
+const { cards } = data;
 
 // Cards route renders card template, id is the route parameter
 router.get('/:id', (req, res) => {
-    res.render('card', {
-        prompt: cards[req.params.id].question,
-        hint: cards[req.params.id].hint
-    });
+    const { side } = req.query;
+    const { id } = req.params;
+    const text = cards[id][side];
+    const { hint } = cards[id];
+
+    const templateData = { text, hint }
+
+    res.render('card', templateData);
 });
 
 // Export module
