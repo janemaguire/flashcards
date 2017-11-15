@@ -10,15 +10,29 @@ router.get('/:id', (req, res) => {
     const text = cards[id][side];
     const { hint } = cards[id];
 
-    const templateData = { text };
+    const templateData = { id, text };
 
-    // Only show hint on question side
+    // Only show hint on question side, switch from question to answer and back again
     if (side === 'question') {
         templateData.hint = hint;
+        templateData.sideToShow = 'answer';
+        templateData.sideToShowDisplay = 'Answer';
+    } else if (side === 'answer') {
+        templateData.sideToShow = 'question';
+        templateData.sideToShowDisplay = 'Question';
     }
 
     res.render('card', templateData);
 });
+
+// Redirect /cards to a random card
+router.get('/', (req, res) => {
+    // Logic to get random cards
+    const randomCard = Math.floor((Math.random() * cards.length));
+
+    res.redirect(`/cards/${randomCard}?side=question`);
+
+})
 
 // Export module
 module.exports = router;
