@@ -15,6 +15,20 @@ app.use(cookieParser());
 // Tells express which template engine to use, will ook in /views by default
 app.set('view engine', 'pug');
 
+// Middleware example with errorhandling
+app.use((req, res, next) => {
+    console.log('one');
+    const err = new Error('uh oh');
+    err.status = 500;
+    next();
+});
+
+// Middleware example
+app.use((req, res, next) => {
+    console.log('two');
+    next();
+});
+
 // Home route will listen for GET requests, two parameters, path and callback function
 app.get('/', (req, res) => {
     const name = req.cookies.username;
@@ -50,6 +64,20 @@ app.get('/cards', (req, res) => {
 app.post('/goodbye', (req, res) => {
     res.clearCookie('username');
     res.redirect('hello');
+});
+
+// Handling 404 errors
+app.use((req, res, next) => {
+    const err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+// Error handler middleware, four parameters
+app.use((err, req, res, next) => {
+    res.locals.error = err;
+    res.status(err.status);
+    res.render('error');
 });
 
 // Port to serve app on, can also take a callback as a parameter
