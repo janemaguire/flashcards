@@ -15,6 +15,12 @@ app.use(cookieParser());
 // Tells express which template engine to use, will ook in /views by default
 app.set('view engine', 'pug');
 
+// Import and use routes module and card routes module
+const mainRoutes = require('./routes');
+const cardRoutes = require('./routes/cards')
+app.use(mainRoutes);
+app.use('/cards', cardRoutes);
+
 // Middleware example with errorhandling
 app.use((req, res, next) => {
     console.log('one');
@@ -27,43 +33,6 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
     console.log('two');
     next();
-});
-
-// Home route will listen for GET requests, two parameters, path and callback function
-app.get('/', (req, res) => {
-    const name = req.cookies.username;
-    if (name) {
-        res.render('index', { name });
-    } else {
-        res.redirect('hello');
-    }
-});
-
-// Hello route get request, get username from cookie
-app.get('/hello', (req, res) => {
-    const name = req.cookies.username;
-    if (name) {
-        res.redirect('/');
-    } else {
-        res.render('hello');
-    }
-});
-
-// Hello route post request, set username to cookie
-app.post('/hello', (req, res) => {
-    res.cookie('username', req.body.username);
-    res.redirect('/');
-});
-
-// Cards route renders card template
-app.get('/cards', (req, res) => {
-    res.render('card', { prompt: 'Question 1', hint: 'Here is a clue'});
-});
-
-// Goodbye route
-app.post('/goodbye', (req, res) => {
-    res.clearCookie('username');
-    res.redirect('hello');
 });
 
 // Handling 404 errors
