@@ -10,13 +10,14 @@ router.get('/:id', (req, res) => {
 
     // Redirect /cards/id to the question for that id
     if (!side) {
-        res.redirect(`/cards/${id}?side=question`);
+        return res.redirect(`/cards/${id}?side=question`);
     }
 
+    const name = req.cookies.username;
     const text = cards[id][side];
     const { hint } = cards[id];
 
-    const templateData = { id, text };
+    const templateData = { id, text, name };
 
     // Only show hint on question side, switch from question to answer and back again
     if (side === 'question') {
