@@ -1,12 +1,8 @@
 extends layout.pug
 
 block content
+    section#content
+        h2 Welcome, #{name}!
 
-	section.namecard
-		.namecard-hello
-			p.namecard-greeting Welcome, John!
-			form.namecard-exit(action="/goodbye", method="POST")
-				button(type="submit")
-					img(src="img/close.svg")
-		h1.namecard-prompt Let's get started
-		a.namecard-submit(href="card-front.html") Begin!
+        form(action='/goodbye', method='post')
+            button(type='submit') Goodbye
