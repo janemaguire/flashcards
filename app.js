@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Use cookie parser
 app.use(cookieParser());
+app.use('/static', express.static('public'));
 
 // Tells express which template engine to use, will ook in /views by default
 app.set('view engine', 'pug');

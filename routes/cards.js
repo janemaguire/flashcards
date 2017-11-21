@@ -10,7 +10,7 @@ router.get('/:id', (req, res) => {
 
     // Redirect /cards/id to the question for that id
     if (!side) {
-        res.redirect(`/cards/${id}?side=question`);
+        return res.redirect(`/cards/${id}?side=question`);
     }
 
     const text = cards[id][side];
